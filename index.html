@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="scripts/three.js"></script>
+    <script src="scripts/game.js"></script>
+    <link rel="stylesheet" href="styles/game.css" />
+    <title>Runner</title>
+  </head>
+  <body>
+    <script>
+      const SPEED_CAMERA = 0.2;
+      game.init({
+        keys_capture: true,
+        mouse_capture: true,
+        mouse_lock: true,
+      });
+      game.addCube({
+        position: game.v(-2, 0, -5),
+        color: "red",
+      });
+      game.addCube({
+        position: game.v(2, 0, -5),
+        color: "blue",
+      });
+      game.on("keydown", (keys) => {
+        if (keys.KeyW) {
+          game.getCamera().translateZ(-SPEED_CAMERA);
+        } else if (keys.KeyS) {
+          game.getCamera().translateZ(SPEED_CAMERA);
+        }
+
+        if (keys.KeyA) {
+          game.getCamera().translateX(-SPEED_CAMERA);
+        } else if (keys.KeyD) {
+          game.getCamera().translateX(SPEED_CAMERA);
+        }
+      });
+      game.on("keypress", (keys) => {
+        console.log("down", keys);
+      });
+      game.on("keyup", (keys) => {
+        console.log("up", keys);
+      });
+      game.on("mousedown", (mouse) => {
+        console.log("down", mouse);
+      });
+      game.on("mousemove", (mouse) => {
+        // console.log("speed", mouse.speed);
+        game.getCamera().rotateY(-mouse.speed.z * 0.005);
+      });
+    </script>
+  </body>
+</html>
